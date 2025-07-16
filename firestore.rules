@@ -1,0 +1,109 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =====================
+    // ORDERS COLLECTION - ENHANCED FOR BETTER DRIVER ACCESS
+    // =====================
+    match /orders/{orderId} {
+      // Users dapat membaca orders mereka sendiri
+      allow read: if request.auth != null && request.auth.uid == resource.data.user_id;
+      
+      // ENHANCED: Drivers dapat membaca semua orders yang waiting (akses diperluas)
+      allow read: if request.auth != null && resource.data.status == "waiting";
+      
+      // Drivers dapat membaca orders yang assigned ke mereka untuk semua status
+      allow read: if request.auth != null && 
+                  resource.data.assigned_driver_id == request.auth.uid;
+      
+      // Users dapat create order dengan validasi minimal
+      allow create: if request.auth != null 
+                    && request.auth.uid == request.resource.data.user_id
+                    && request.resource.data.status == "waiting";
+      
+      // Users dapat update orders mereka (untuk cancel atau modify)
+      allow update: if request.auth != null && request.auth.uid == resource.data.user_id;
+      
+      // Drivers dapat update orders yang assigned ke mereka
+      allow update: if request.auth != null 
+                    && resource.data.assigned_driver_id == request.auth.uid;
+      
+      // ENHANCED: Drivers dapat take order (lebih permissive untuk debugging)
+      allow update: if request.auth != null 
+                    && resource.data.status == "waiting"
+                    && (resource.data.assigned_driver_id == null || resource.data.assigned_driver_id == "")
+                    && request.resource.data.assigned_driver_id == request.auth.uid
+                    && request.resource.data.status == "accepted";
+      
+      // Allow delete for users (cancel their own orders)
+      allow delete: if request.auth != null && request.auth.uid == resource.data.user_id;
+    }
+
+    // =====================
+    // DRIVERS COLLECTION - ENHANCED UNTUK REAL-TIME TRACKING
+    // =====================
+    match /drivers/{driverId} {
+      // Driver dapat akses data mereka sendiri
+      allow read, write: if request.auth != null && request.auth.uid == driverId;
+      
+      // ENHANCED: Semua authenticated users dapat membaca data driver (untuk order assignment)
+      allow read: if request.auth != null;
+      
+      // Create dengan validasi minimal
+      allow create: if request.auth != null 
+                    && request.auth.uid == driverId;
+    }
+
+    // =====================
+    // DRIVER LOCATIONS - REAL-TIME TRACKING
+    // =====================
+    match /driver_locations/{driverId} {
+      // Semua authenticated users dapat membaca lokasi driver
+      allow read: if request.auth != null;
+      
+      // Driver dapat update lokasi mereka sendiri
+      allow write: if request.auth != null && request.auth.uid == driverId;
+    }
+
+    // =====================
+    // USERS COLLECTION
+    // =====================
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      allow create: if request.auth != null 
+                    && request.auth.uid == userId;
+    }
+
+    // =====================
+    // SELLERS COLLECTION
+    // =====================
+    match /sellers/{sellerId} {
+      allow read, write: if request.auth != null && request.auth.uid == sellerId;
+      
+      allow create: if request.auth != null 
+                    && request.auth.uid == sellerId;
+    }
+
+    // =====================
+    // PRODUCTS COLLECTION
+    // =====================
+    match /products/{productId} {
+      allow read: if true;
+
+      allow create: if request.auth != null
+        && request.resource.data.sellerId == request.auth.uid;
+
+      allow update, delete: if request.auth != null
+        && resource.data.sellerId == request.auth.uid;
+    }
+
+    // =====================
+    // ORDER LOGS COLLECTION (for debugging and tracking)
+    // =====================
+    match /order_logs/{logId} {
+      allow read, create: if request.auth != null;
+    }
+  }
+}

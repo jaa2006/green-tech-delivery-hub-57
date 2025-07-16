@@ -1,0 +1,61 @@
+
+/* Mapbox CSS - Import this in your component */
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+/* Custom map styling */
+#map {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure map container has proper z-index */
+.mapboxgl-map {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Custom marker popup styling */
+.mapboxgl-popup-content {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 12px;
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 18px;
+  padding: 5px;
+}
+
+/* Responsive map */
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+  }
+}
+
+/* Fix for mapbox control positioning */
+.mapboxgl-ctrl-group {
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-ctrl-group button {
+  border-radius: 0;
+  border: none;
+}
+
+.mapboxgl-ctrl-group button:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.mapboxgl-ctrl-group button:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}

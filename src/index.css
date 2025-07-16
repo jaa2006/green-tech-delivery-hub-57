@@ -1,0 +1,166 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: linear-gradient(to bottom, #07595A, #000000);
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 186 100% 20%; /* Updated to #07595A */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 186 100% 25%; /* Lighter variant of #07595A */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 186 100% 20%;
+
+    --radius: 16px;
+  }
+
+  .dark {
+    --background: linear-gradient(to bottom, #07595A, #000000);
+    --foreground: 0 0% 98%;
+
+    --card: 240 5% 13%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 5% 13%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 186 100% 20%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 186 100% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 186 100% 25%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply text-foreground font-poppins;
+    background: linear-gradient(to bottom, #07595A, #000000);
+    min-height: 100vh;
+  }
+
+  html {
+    background: linear-gradient(to bottom, #07595A, #000000);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    @apply bg-[#07595A] text-white;
+  }
+}
+
+@layer components {
+  .mobile-container {
+    @apply max-w-md mx-auto min-h-screen pb-20 px-0;
+    background: linear-gradient(to bottom, #07595A, #000000);
+  }
+
+  .content-container {
+    @apply px-4;
+  }
+
+  .habisin-button {
+    @apply bg-[#07595A] text-white rounded-full py-3 px-6 font-medium transition-all duration-200 hover:opacity-90 active:scale-95 w-full text-center;
+  }
+
+  .habisin-card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-200 p-4 text-gray-900;
+  }
+
+  .habisin-dark {
+    @apply bg-white/10 backdrop-blur-sm rounded-xl p-4 text-white border border-white/20;
+  }
+
+  .habisin-card-dark {
+    @apply bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 text-white border border-gray-700/50;
+  }
+
+  .bottom-nav-item {
+    @apply flex flex-col items-center justify-center space-y-1 text-muted-foreground;
+  }
+
+  .bottom-nav-item.active {
+    @apply text-[#07595A];
+  }
+  
+  .habisin-header {
+    @apply bg-[#07595A] text-white py-5 px-4 rounded-b-3xl;
+  }
+
+  .gradient-background {
+    background: linear-gradient(to bottom, #07595A, #000000);
+  }
+
+  .search-container {
+    @apply bg-gradient-to-b from-[#07595A] to-black min-h-screen;
+  }
+
+  .search-input {
+    @apply w-full pl-10 pr-4 py-3 rounded-xl border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#07595A]/20;
+  }
+}
+
+/* Animated Button Floating Points Animation */
+@keyframes floating-points {
+  0% { 
+    transform: translateY(0); 
+    opacity: 1;
+  }
+  85% { 
+    opacity: 0; 
+  }
+  100% { 
+    transform: translateY(-55px); 
+    opacity: 0; 
+  }
+}
+
+.animate-float-1 { animation: floating-points 2.35s infinite ease-in-out 0.2s; }
+.animate-float-2 { animation: floating-points 2.5s infinite ease-in-out 0.5s; }
+.animate-float-3 { animation: floating-points 2.2s infinite ease-in-out 0.1s; }
+.animate-float-4 { animation: floating-points 2.05s infinite ease-in-out 0s; }
+.animate-float-5 { animation: floating-points 1.9s infinite ease-in-out 0s; }
+.animate-float-6 { animation: floating-points 1.5s infinite ease-in-out 1.5s; }
+.animate-float-7 { animation: floating-points 2.2s infinite ease-in-out 0.2s; }
+.animate-float-8 { animation: floating-points 2.25s infinite ease-in-out 0.2s; }
+.animate-float-9 { animation: floating-points 2.6s infinite ease-in-out 0.1s; }
+.animate-float-10 { animation: floating-points 2.5s infinite ease-in-out 0.2s; }
